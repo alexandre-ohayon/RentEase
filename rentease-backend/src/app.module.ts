@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { PropertiesModule } from './properties/properties.module';
+import { TenantsModule } from './tenants/tenants.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { PropertiesModule } from './properties/properties.module';
       process.env.MONGO_URI || 'mongodb://localhost:27017/default-db',
     ),
     PropertiesModule,
+    TenantsModule,
   ],
 })
 export class AppModule {}
