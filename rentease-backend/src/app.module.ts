@@ -8,9 +8,11 @@ import { TenantsModule } from './tenants/tenants.module';
 import { LeasesModule } from './leases/leases.module';
 import { PaymentsModule } from './payments/payments.module';
 import { PaymentsConsumerModule } from './payments-consumer/payments-consumer.module';
-
+import { forwardRef } from '@nestjs/common';
 @Module({
   imports: [
+    forwardRef(() => PaymentsModule),
+    forwardRef(() => PaymentsConsumerModule),
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
       process.env.MONGO_URI || 'mongodb://localhost:27017/default-db',
@@ -18,22 +20,19 @@ import { PaymentsConsumerModule } from './payments-consumer/payments-consumer.mo
     PropertiesModule,
     TenantsModule,
     LeasesModule,
+    PaymentsModule,
+    PaymentsConsumerModule,
     ClientsModule.register([
       {
         name: 'KAFKA_SERVICE',
         transport: Transport.KAFKA,
         options: {
-          client: {
-            brokers: ['localhost:9092'],
-          },
-          consumer: {
-            groupId: 'rentease-consumer',
-          },
+          client: { brokers: ['localhost:9092'] },
+          consumer: { groupId: 'rentease-group' },
         },
       },
     ]),
-    PaymentsModule,
-    PaymentsConsumerModule,
   ],
+  exports: [ClientsModule],
 })
 export class AppModule {}
