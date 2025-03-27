@@ -25,6 +25,9 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: ./rentease-frontend/pnpm-lock.yaml
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
         run: pnpm install
 
