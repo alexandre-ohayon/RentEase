@@ -9,6 +9,7 @@ import { LeasesModule } from './leases/leases.module';
 import { PaymentsModule } from './payments/payments.module';
 import { PaymentsConsumerModule } from './payments-consumer/payments-consumer.module';
 import { forwardRef } from '@nestjs/common';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     forwardRef(() => PaymentsModule),
@@ -32,6 +33,7 @@ import { forwardRef } from '@nestjs/common';
         },
       },
     ]),
+    AuthModule,
   ],
   exports: [ClientsModule],
 })
